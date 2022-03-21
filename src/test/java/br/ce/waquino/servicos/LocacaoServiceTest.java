@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 import org.junit.rules.ExpectedException;
 
+import br.ce.acquino.exceptions.FilmeSemEstoqueException;
+import br.ce.acquino.exceptions.LocadoraException;
 import br.ce.wcaquino.entidades.Filme;
 import br.ce.wcaquino.entidades.Locacao;
 import br.ce.wcaquino.entidades.Usuario;
@@ -43,7 +45,7 @@ public class LocacaoServiceTest {
 		error.checkThat(isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
 	}
 
-	@Test(expected=Exception.class)
+	@Test(expected = FilmeSemEstoqueException.class)
 	public void testLocacao_filmeSemEstoque() throws Exception {
 		// Data
 		Usuario usuario = new Usuario("Kleber");
@@ -52,35 +54,35 @@ public class LocacaoServiceTest {
 
 		// When
 		locacaoService.alugarFilme(usuario, filme);
-	}
-	
-	@Test
-	public void testLocacao_filmeSemEstoque2(){
-		// Data
-		Usuario usuario = new Usuario("Kleber");
-		Filme filme = new Filme("Interestelar", 0, 60.0);
-		LocacaoService locacaoService = new LocacaoService();
-
-		// When
-		try {
-			locacaoService.alugarFilme(usuario, filme);
-			Assert.fail("Deveria ter lançado uma exceção");
-		} catch (Exception e) {
-			Assert.assertThat(e.getMessage(), is("Filme sem estoque"));
-		}
-	}
-	
-	@Test
-	public void testLocacao_filmeSemEstoque_3() throws Exception {
-		// Data
-		Usuario usuario = new Usuario("Kleber");
-		Filme filme = new Filme("Interestelar", 0, 60.0);
-		LocacaoService locacaoService = new LocacaoService();
-
-		exception.expect(Exception.class);
-		exception.expectMessage("Filme sem estoque");
 		
-		// When
-		locacaoService.alugarFilme(usuario, filme);	
+		System.out.println("Forma Elegante");
+	}
+	
+	@Test
+	public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException {
+		
+		Filme filme = new Filme("Interestelar", 2, 60.0);
+		LocacaoService locacaoService = new LocacaoService();
+
+		try {
+			locacaoService.alugarFilme(null, filme);
+			Assert.fail();
+		} catch (LocadoraException e) {
+			Assert.assertThat(e.getMessage(), is("Usuario vazio"));
+		}
+		System.out.println("Forma Robusta");
+	}
+	
+	@Test
+	public void testLocacao_FilveVazio() throws FilmeSemEstoqueException, LocadoraException {
+		LocacaoService locacaoService = new LocacaoService();
+		Usuario usuario = new Usuario("Kleber");
+
+		exception.expect(LocadoraException.class);
+		exception.expectMessage("Filme vazio");
+		
+		locacaoService.alugarFilme(usuario, null);
+		
+		System.out.println("Forma Nova");
 	}
 }
