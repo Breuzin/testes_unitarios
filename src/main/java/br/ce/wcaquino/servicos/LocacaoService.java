@@ -15,7 +15,7 @@ public class LocacaoService {
 
 	public Locacao alugarFilme(Usuario usuario, List<Filme> filmes) throws FilmeSemEstoqueException, LocadoraException  {
 
-		double valor = 0;
+		
 		
 		if (usuario == null) {
 			throw new LocadoraException("Usuario vazio");
@@ -27,9 +27,23 @@ public class LocacaoService {
 			throw new FilmeSemEstoqueException("Filme sem estoque");
 		}
 		
-		valor = filmes.stream().mapToDouble(x -> x.getPrecoLocacao()).sum();
+		Double valorTotal = 0d;
+		for (int i = 0; i < filmes.size(); i++) {
+			double valorFilme = filmes.get(i).getPrecoLocacao();
+			switch (i) {
+				case 2: valorFilme *= 0.75; 
+				break;
+				case 3: valorFilme *= 0.50; 
+				break;
+				case 4: valorFilme *= 0.25; 
+				break;
+				case 5: valorFilme = 0; 
+				break;
+			}
+			valorTotal += valorFilme;
+		}
 		Date dataLocacao = new Date();
-		Locacao locacao = new Locacao(usuario, valor, filmes, dataLocacao);
+		Locacao locacao = new Locacao(usuario, valorTotal, filmes, dataLocacao);
 		
 		// Entrega no dia seguinte
 		Date dataEntrega = new Date();
