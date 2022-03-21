@@ -6,7 +6,11 @@ import static org.hamcrest.CoreMatchers.is;
 
 import java.util.Date;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -22,22 +26,45 @@ import br.ce.wcaquino.utils.DataUtils;
 
 public class LocacaoServiceTest {
 
+	private LocacaoService service;
+
 	@Rule
 	public ErrorCollector error = new ErrorCollector();
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
+
+	@Before
+	public void setup() {
+		System.out.println("Before");
+		service = new LocacaoService();
+	}
+
+	@After
+	public void after() {
+		System.out.println("After");
+	}
+
+	@BeforeClass
+	public static void setupClass() {
+		System.out.println("Before Class");
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		System.out.println("After Class");
+	}
+
 	@Test
 	public void testLocacao() throws Exception {
 
 		// Data
 		Usuario usuario = new Usuario("Kleber");
 		Filme filme = new Filme("Interestelar", 2, 60.0);
-		LocacaoService locacaoService = new LocacaoService();
 
 		// When
 		Locacao locacao;
-		locacao = locacaoService.alugarFilme(usuario, filme);
+		locacao = service.alugarFilme(usuario, filme);
 
 		// Verification
 		error.checkThat(locacao.getValor(), is(equalTo(60.0)));
@@ -50,39 +77,31 @@ public class LocacaoServiceTest {
 		// Data
 		Usuario usuario = new Usuario("Kleber");
 		Filme filme = new Filme("Interestelar", 0, 60.0);
-		LocacaoService locacaoService = new LocacaoService();
 
 		// When
-		locacaoService.alugarFilme(usuario, filme);
-		
-		System.out.println("Forma Elegante");
+		service.alugarFilme(usuario, filme);
 	}
-	
+
 	@Test
 	public void testLocacao_usuarioVazio() throws FilmeSemEstoqueException {
-		
+
 		Filme filme = new Filme("Interestelar", 2, 60.0);
-		LocacaoService locacaoService = new LocacaoService();
 
 		try {
-			locacaoService.alugarFilme(null, filme);
+			service.alugarFilme(null, filme);
 			Assert.fail();
 		} catch (LocadoraException e) {
 			Assert.assertThat(e.getMessage(), is("Usuario vazio"));
 		}
-		System.out.println("Forma Robusta");
 	}
-	
+
 	@Test
 	public void testLocacao_FilveVazio() throws FilmeSemEstoqueException, LocadoraException {
-		LocacaoService locacaoService = new LocacaoService();
 		Usuario usuario = new Usuario("Kleber");
 
 		exception.expect(LocadoraException.class);
 		exception.expectMessage("Filme vazio");
-		
-		locacaoService.alugarFilme(usuario, null);
-		
-		System.out.println("Forma Nova");
+
+		service.alugarFilme(usuario, null);
 	}
 }
