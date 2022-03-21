@@ -6,11 +6,8 @@ import static org.hamcrest.CoreMatchers.is;
 
 import java.util.Date;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
@@ -36,23 +33,7 @@ public class LocacaoServiceTest {
 
 	@Before
 	public void setup() {
-		System.out.println("Before");
 		service = new LocacaoService();
-	}
-
-	@After
-	public void after() {
-		System.out.println("After");
-	}
-
-	@BeforeClass
-	public static void setupClass() {
-		System.out.println("Before Class");
-	}
-
-	@AfterClass
-	public static void afterClass() {
-		System.out.println("After Class");
 	}
 
 	@Test
