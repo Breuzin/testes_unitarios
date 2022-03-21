@@ -3,7 +3,6 @@ package br.ce.waquino.servicos;
 import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 
 import java.util.Arrays;
 import java.util.Date;

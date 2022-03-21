@@ -19,6 +19,7 @@ public class Locacao {
 		this.filmes = filmes;
 		this.dataLocacao = dataLocacao;
 	}
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
