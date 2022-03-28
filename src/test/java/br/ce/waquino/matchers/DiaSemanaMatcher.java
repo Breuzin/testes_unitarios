@@ -13,8 +13,15 @@ public class DiaSemanaMatcher extends TypeSafeMatcher<Date> {
 
 	protected Integer diaDaSemana;
 	
+	protected Date data;
+	
+	
 	public DiaSemanaMatcher(Integer diaDaSemana) {
 		this.diaDaSemana = diaDaSemana;
+	}
+	
+	public DiaSemanaMatcher(Date data) {
+		this.data = data;
 	}
 	
 	@Override
