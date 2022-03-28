@@ -3,7 +3,6 @@ package br.ce.waquino.servicos;
 import static br.ce.wcaquino.utils.DataUtils.isMesmaData;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -97,60 +96,6 @@ public class LocacaoServiceTest {
 		exception.expectMessage("Filme vazio");
 
 		service.alugarFilme(usuario, null);
-	}
-
-	@Test
-	public void devePagar75PctNoFilme3() throws FilmeSemEstoqueException, LocadoraException {
-		Usuario usuario = new Usuario("user1");
-		filmes = Arrays.asList(new Filme("Interestelar", 2, 4.0),
-				new Filme("Piratas do Caribe", 2, 4.0),
-				new Filme("Passageiros", 1, 4.0));
-		
-		Locacao resultado = service.alugarFilme(usuario, filmes);
-		
-		assertThat(resultado.getValor(), is(11.0));
-	}
-	
-	@Test
-	public void devePagar50PctNoFilme4() throws FilmeSemEstoqueException, LocadoraException {
-		Usuario usuario = new Usuario("user1");
-		filmes = Arrays.asList(new Filme("Interestelar", 2, 4.0),
-				new Filme("Piratas do Caribe", 2, 4.0),
-				new Filme("Passageiros", 1, 4.0),
-				new Filme("Até que a morte nos separe", 1, 4.0));
-		
-		Locacao resultado = service.alugarFilme(usuario, filmes);
-		
-		assertThat(resultado.getValor(), is(13.0));
-	}
-	
-	@Test
-	public void devePagar25PctNoFilme5() throws FilmeSemEstoqueException, LocadoraException {
-		Usuario usuario = new Usuario("user1");
-		filmes = Arrays.asList(new Filme("Interestelar", 2, 4.0),
-				new Filme("Piratas do Caribe", 2, 4.0),
-				new Filme("Passageiros", 1, 4.0),
-				new Filme("Até que a morte nos separe", 1, 4.0),
-				new Filme("Filme 5", 1, 4.0));
-		
-		Locacao resultado = service.alugarFilme(usuario, filmes);
-		
-		assertThat(resultado.getValor(), is(14.0));
-	}
-	
-	@Test
-	public void devePagar0PctNoFilme6() throws FilmeSemEstoqueException, LocadoraException {
-		Usuario usuario = new Usuario("user1");
-		filmes = Arrays.asList(new Filme("Interestelar", 2, 4.0),
-				new Filme("Piratas do Caribe", 2, 4.0),
-				new Filme("Passageiros", 1, 4.0),
-				new Filme("Até que a morte nos separe", 1, 4.0),
-				new Filme("Filme 5", 1, 4.0),
-				new Filme("Filme 6", 1, 4.0));
-		
-		Locacao resultado = service.alugarFilme(usuario, filmes);
-		
-		assertThat(resultado.getValor(), is(14.0));
 	}
 	
 	@Test
