@@ -59,9 +59,7 @@ public class LocacaoServiceTest {
 
 		// Verification
 		error.checkThat(locacao.getTotalValue(), is(equalTo(130.0)));
-		//error.checkThat(isMesmaData(locacao.getDataLocacao(), new Date()), is(true));
 		error.checkThat(locacao.getDataLocacao(), MatchersProprios.ehHoje());
-		//error.checkThat(isMesmaData(locacao.getDataRetorno(), DataUtils.obterDataComDiferencaDias(1)), is(true));
 		error.checkThat(locacao.getDataRetorno(), MatchersProprios.ehHojeComDiferencaDias(1));
 	}
 
