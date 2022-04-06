@@ -12,6 +12,9 @@ public class Locacao {
 	
 	private List<Filme> filmes;
 	
+	public Locacao() {
+	}
+	
 	public Locacao(Usuario usuario, Double valor, List<Filme> filmes, Date dataLocacao) {
 		super();
 		this.usuario = usuario;
@@ -46,6 +49,10 @@ public class Locacao {
 	}
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+	
+	public void setFilmes(List<Filme> filmes) {
+		this.filmes = filmes;
 	}
 	
 	public List<Filme> getFilmes() {
